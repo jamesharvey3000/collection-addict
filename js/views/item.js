@@ -48,7 +48,7 @@ Router.register('item', async (id) => {
     : '';
 
   const editCurrentPhotoHtml = item.photoUrl
-    ? `<div class="photo-preview" id="edit-current-photo"><img src="${item.photoUrl}" alt=""><button type="button" class="photo-remove" id="edit-photo-clear"><i class="fa-solid fa-xmark"></i></button></div>`
+    ? `<div class="photo-preview" id="edit-current-photo"><img src="${item.photoThumbUrl || item.photoUrl}" alt=""><button type="button" class="photo-remove" id="edit-photo-clear"><i class="fa-solid fa-xmark"></i></button></div>`
     : '';
 
   return `<div class="view">
@@ -232,14 +232,18 @@ document.addEventListener('submit', async (e) => {
 
   const photoAction = document.getElementById('edit-photo-action')?.value;
   if (photoAction === 'remove') {
-    await Photos.remove(existing.photoUrl);
+    await Photos.remove(existing.id);
     existing.photoUrl = null;
+    existing.photoThumbUrl = null;
   } else if (photoAction === 'replace') {
     const file = document.getElementById('edit-photo')?.files[0];
     if (file) {
-      await Photos.remove(existing.photoUrl);
-      const url = await Photos.upload(file, existing.id);
-      if (url) existing.photoUrl = url;
+      await Photos.remove(existing.id);
+      const photos = await Photos.upload(file, existing.id);
+      if (photos) {
+        existing.photoUrl = photos.photoUrl;
+        existing.photoThumbUrl = photos.photoThumbUrl;
+      }
     }
   }
 

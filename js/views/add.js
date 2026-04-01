@@ -95,9 +95,10 @@ document.addEventListener('submit', async (e) => {
 
   const photoFile = document.getElementById('add-photo')?.files[0];
   if (photoFile) {
-    const url = await Photos.upload(photoFile, saved.id);
-    if (url) {
-      saved.photoUrl = url;
+    const photos = await Photos.upload(photoFile, saved.id);
+    if (photos) {
+      saved.photoUrl = photos.photoUrl;
+      saved.photoThumbUrl = photos.photoThumbUrl;
       await DB.addItem(saved);
     }
   }

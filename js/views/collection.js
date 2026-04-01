@@ -12,8 +12,8 @@ Router.register('collection', async () => {
     return list.map(i => {
       const p = fmtPrice(i.price);
       const d = fmtDate(i.createdAt);
-      const lead = i.photoUrl
-        ? `<img src="${i.photoUrl}" alt="${i.name}" class="item-thumb">`
+      const lead = (i.photoThumbUrl || i.photoUrl)
+        ? `<img src="${i.photoThumbUrl || i.photoUrl}" alt="${i.name}" class="item-thumb">`
         : `<div class="item-icon item-icon--${i.category}"><i class="fa-solid ${catIcon(i.category)}"></i></div>`;
       return `<div class="item-row" data-id="${i.id}">
         ${lead}
