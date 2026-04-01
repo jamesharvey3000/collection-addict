@@ -43,9 +43,9 @@ Router.register('item', async (id) => {
 
   const editCatFields = renderCatFields(item.category, item);
 
-  const photoHtml = item.photoUrl
-    ? `<img src="${item.photoUrl}" alt="${item.name}" class="detail-photo">`
-    : '';
+  const headerIconHtml = item.photoUrl
+    ? `<img src="${item.photoUrl}" alt="${item.name}" class="detail-item-photo scale-in">`
+    : `<div class="detail-icon item-icon--${item.category} scale-in"><i class="fa-solid ${cat.icon}"></i></div>`;
 
   const editCurrentPhotoHtml = item.photoUrl
     ? `<div class="photo-preview" id="edit-current-photo"><img src="${item.photoThumbUrl || item.photoUrl}" alt=""><button type="button" class="photo-remove" id="edit-photo-clear"><i class="fa-solid fa-xmark"></i></button></div>`
@@ -60,10 +60,8 @@ Router.register('item', async (id) => {
       </div>
     </div>
 
-    ${photoHtml}
-
     <div class="detail-header">
-      <div class="detail-icon item-icon--${item.category} scale-in"><i class="fa-solid ${cat.icon}"></i></div>
+      ${headerIconHtml}
       <h1 class="detail-name">${item.name}</h1>
       <div class="detail-sub">${cat.label}${item.brand ? ' &middot; ' + item.brand : ''}</div>
       ${stars ? `<div class="detail-stars">${stars}</div>` : ''}
