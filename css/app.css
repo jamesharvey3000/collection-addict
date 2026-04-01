@@ -695,6 +695,34 @@ body.auth-page #view-container {
 }
 
 /* ═══════════════════════════════════════
+   WISHLIST
+   ═══════════════════════════════════════ */
+
+.wish-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 12px; margin-bottom: 24px;
+}
+
+.wishlist-row {
+  display: flex; align-items: center; gap: 14px; padding: 14px 20px;
+  border-bottom: 1px solid var(--border-light); cursor: pointer; transition: background 0.15s;
+}
+
+.wishlist-row:last-child { border-bottom: none; }
+.wishlist-row:hover { background: var(--bg-hover); }
+.wishlist-row:active { transform: scale(0.99); }
+
+.wishlist-row-meta { display: flex; align-items: center; gap: 8px; margin-top: 5px; flex-wrap: wrap; }
+
+.badge--priority-high { background: var(--red-dim); color: var(--red); }
+.badge--priority-medium { background: var(--amber-dim); color: var(--amber); }
+.badge--priority-low { background: var(--blue-dim); color: var(--blue); }
+
+.expected-price { font-size: 0.72rem; color: var(--text-muted); font-weight: 600; }
+
+.btn--sm { padding: 8px 14px; font-size: 0.78rem; }
+
+/* ═══════════════════════════════════════
    PHOTOS
    ═══════════════════════════════════════ */
 

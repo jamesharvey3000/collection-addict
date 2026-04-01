@@ -11,6 +11,12 @@ Router.register('add', async () => {
         <div class="field"><label class="field-label">Price Paid</label><input type="number" class="field-input" id="add-price" placeholder="0.00" step="0.01" min="0"></div>
         <div class="field"><label class="field-label">Status</label><select class="field-input" id="add-status"><option value="own">Own</option><option value="opened">Opened</option><option value="wishlist">Wishlist</option><option value="sold">Sold</option><option value="traded">Traded</option><option value="gifted">Gifted</option><option value="consumed">Consumed</option></select></div>
       </div>
+      <div id="add-wishlist-section" style="display:none">
+        <div class="field-row">
+          <div class="field"><label class="field-label">Priority</label><select class="field-input" id="add-priority"><option value="">None</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></div>
+          <div class="field"><label class="field-label">Expected Price</label><input type="number" class="field-input" id="add-expected-price" placeholder="0.00" step="0.01" min="0"></div>
+        </div>
+      </div>
       <div class="field"><label class="field-label">Storage Location</label><input type="text" class="field-input" id="add-location" placeholder="e.g. Shelf 2, Humidor A"></div>
 
       <div id="cat-fields-section"></div>
@@ -30,6 +36,17 @@ document.addEventListener('change', (e) => {
     if (section) {
       const html = renderCatFields(e.target.value, null);
       section.innerHTML = html ? `<div class="cat-fields-divider"><span>Details</span></div>${html}` : '';
+    }
+  }
+  if (e.target.id === 'add-status') {
+    const section = document.getElementById('add-wishlist-section');
+    if (section) {
+      const isWishlist = e.target.value === 'wishlist';
+      section.style.display = isWishlist ? 'block' : 'none';
+      if (!isWishlist) {
+        document.getElementById('add-priority').value = '';
+        document.getElementById('add-expected-price').value = '';
+      }
     }
   }
   if (e.target.id === 'add-photo') {
@@ -84,6 +101,13 @@ document.addEventListener('submit', async (e) => {
     notes: document.getElementById('add-notes').value.trim(),
     ...collectCatFields()
   };
+
+  if (item.status === 'wishlist') {
+    const priority = document.getElementById('add-priority')?.value;
+    const expectedPrice = document.getElementById('add-expected-price')?.value;
+    if (priority) item.priority = priority;
+    if (expectedPrice) item.expectedPrice = expectedPrice;
+  }
 
   if (!item.name || !item.category) return;
 

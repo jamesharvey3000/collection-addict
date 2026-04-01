@@ -89,6 +89,14 @@ Router.register('item', async (id) => {
               ${['own','opened','wishlist','sold','traded','gifted','consumed'].map(s => `<option value="${s}" ${item.status === s ? 'selected' : ''}>${s}</option>`).join('')}
             </select></div>
           </div>
+          <div id="edit-wishlist-section" style="display:${item.status === 'wishlist' ? 'block' : 'none'}">
+            <div class="field-row">
+              <div class="field"><label class="field-label">Priority</label><select class="field-input" id="edit-priority">
+                ${['', 'high', 'medium', 'low'].map(v => `<option value="${v}"${(item.priority || '') === v ? ' selected' : ''}>${v ? v.charAt(0).toUpperCase() + v.slice(1) : 'None'}</option>`).join('')}
+              </select></div>
+              <div class="field"><label class="field-label">Expected Price</label><input type="number" class="field-input" id="edit-expected-price" value="${item.expectedPrice || ''}" placeholder="0.00" step="0.01" min="0"></div>
+            </div>
+          </div>
           <div class="field"><label class="field-label">Location</label><input type="text" class="field-input" id="edit-location" value="${item.location || ''}"></div>
 
           ${editCatFields ? `<div class="cat-fields-divider"><span>Details</span></div>${editCatFields}` : ''}
@@ -129,6 +137,18 @@ Router.register('item', async (id) => {
 });
 
 document.addEventListener('change', (e) => {
+  if (e.target.id === 'edit-status') {
+    const section = document.getElementById('edit-wishlist-section');
+    if (section) {
+      const isWishlist = e.target.value === 'wishlist';
+      section.style.display = isWishlist ? 'block' : 'none';
+      if (!isWishlist) {
+        document.getElementById('edit-priority').value = '';
+        document.getElementById('edit-expected-price').value = '';
+      }
+    }
+    return;
+  }
   if (e.target.id !== 'edit-photo') return;
   const file = e.target.files[0];
   if (!file) return;
@@ -227,6 +247,9 @@ document.addEventListener('submit', async (e) => {
 
   const catData = collectCatFields();
   Object.assign(existing, catData);
+
+  existing.priority = document.getElementById('edit-priority')?.value || null;
+  existing.expectedPrice = document.getElementById('edit-expected-price')?.value || null;
 
   const photoAction = document.getElementById('edit-photo-action')?.value;
   if (photoAction === 'remove') {

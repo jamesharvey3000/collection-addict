@@ -61,6 +61,7 @@ collection-addict/
 │       ├── search.js       (full-text search across collections)
 │       ├── add.js          (add item form, category dropdown triggers extra fields)
 │       ├── collection.js   (collection browser with category filter pills)
+│       ├── wishlist.js     (wishlist view with priority sort, Got It modal, share)
 │       ├── item.js         (item detail view with edit/delete)
 │       ├── profile.js      (user info, sign in/out, push/pull sync, export/import)
 │       └── auth.js         (login/signup UI with tab switching)
@@ -120,18 +121,18 @@ Owned → Opened/Consumed → Sold → Traded → Gifted → Broken → Donated 
 - Skeleton shimmer loading states ready
 - Auth page with tab switching (login/signup)
 - Profile with user info, sync controls
+- Photo uploads — client-side resize (800px full, 200px thumb, JPEG 80%), stored in Supabase Storage under item-photos/{user_id}/{item_id}/; displayed as rounded square on detail view and thumbnails on collection/wishlist rows
+- Wishlist page — dedicated view for wishlist-status items with category filter pills, priority sorting (high/medium/low), expected price display, "Got It" modal to mark as owned with purchase price, clipboard share as formatted text list; priority and expected price fields appear in add/edit forms when status is wishlist
 
 ## Next Priorities (Not Yet Built)
-1. **Photo uploads** — snap or upload item photos, store in Supabase Storage
-2. **Barcode scanner** — html5-qrcode library for scanning UPC/EAN on bottles
-3. **Wishlist as its own page** — dedicated view for wishlist-status items
-4. **Stats dashboard with charts** — collection value over time, category breakdown donut, top brands
-5. **GitHub Pages deployment** — push it live
-6. **Social features** — check-ins (Untappd-style), activity feed, follow system, user reviews
-7. **Market value tracking** — MSRP, secondary market prices, price history
-8. **Gamification** — badges, milestones, streaks
-9. **Label/band photo recognition** — OCR via Google Cloud Vision API
-10. **Batch photo import** — rapidly catalog collections from photos
+1. **Barcode scanner** — html5-qrcode library for scanning UPC/EAN on bottles
+2. **Stats dashboard with charts** — collection value over time, category breakdown donut, top brands
+3. **GitHub Pages deployment** — push it live
+4. **Social features** — check-ins (Untappd-style), activity feed, follow system, user reviews
+5. **Market value tracking** — MSRP, secondary market prices, price history
+6. **Gamification** — badges, milestones, streaks
+7. **Label/band photo recognition** — OCR via Google Cloud Vision API
+8. **Batch photo import** — rapidly catalog collections from photos
 
 ## Code Style Preferences
 - No heavy commenting — keep it clean and professional, not "AI-looking"
