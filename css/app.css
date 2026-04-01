@@ -503,7 +503,7 @@ body.auth-page #view-container {
 }
 
 .detail-item-photo {
-  width: 120px; height: 120px; border-radius: 20px; object-fit: cover;
+  width: 120px; height: 120px; border-radius: 20px; object-fit: contain;
   margin: 0 auto 16px; display: block;
 }
 
